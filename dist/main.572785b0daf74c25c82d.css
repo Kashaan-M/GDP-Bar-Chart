@@ -1,0 +1,64 @@
+/*!*****************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js!./src/index.css ***!
+  \*****************************************************************/
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+body {
+  font-family: open-sans, monospace;
+  line-height: 1.5;
+}
+a {
+  text-decoration: none;
+}
+main {
+  display: flex;
+  height: 100vh;
+  width: 100vw;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  background: #708090;
+}
+.container {
+  position: relative;
+}
+#title {
+  text-align: center;
+  position: relative;
+}
+.bar:hover {
+  fill: cornsilk;
+}
+#tooltip {
+  position: absolute;
+  opacity: 0;
+  height: auto;
+  padding: 1rem 2rem;
+  background: cornflowerblue;
+  font-size: 1rem;
+  text-align: center;
+  top: 40%;
+  left: 30%;
+  transition: all 0.3s ease-out;
+  box-shadow: 1px 1px 3px 3px darkgrey;
+}
+footer {
+  text-align: center;
+}
+a {
+  color: hsl(50, 90%, 50%);
+  font-weight: bold;
+  text-decoration: underline;
+  font-size: 1.25rem;
+}
+a:hover,
+a:active,
+a:visited {
+  color: hsl(50, 90%, 50%);
+}
+
