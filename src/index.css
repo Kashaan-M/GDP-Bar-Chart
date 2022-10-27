@@ -19,7 +19,12 @@ main {
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  background: #708090;
+  background: radial-gradient(
+    circle 1100px at 0px 0px,
+    #6b72d5,
+    #ffdede 80%,
+    #ff7171
+  );
 }
 .container {
   position: relative;
@@ -44,11 +49,13 @@ main {
   transition: all 0.3s ease-out;
   box-shadow: 1px 1px 3px 3px darkgrey;
 }
-footer {
+.footer {
+  display: block;
+  padding-top: 2rem;
   text-align: center;
 }
 a {
-  color: hsl(50, 90%, 50%);
+  color: hsl(49.5, 41.7%, 18.8%);
   font-weight: bold;
   text-decoration: underline;
   font-size: 1.25rem;
@@ -56,5 +63,5 @@ a {
 a:hover,
 a:active,
 a:visited {
-  color: hsl(50, 90%, 50%);
+  color: hsl(49.5, 51.7%, 08.8%);
 }

@@ -14,7 +14,7 @@ let h = 500; // height of <svg>
 let padding = 30; // padding added to x-axis, y-axis, xScale, yScale, <rect> height and more
 const years = [
   1947, 1950, 1955, 1960, 1965, 1970, 1975, 1980, 1985, 1990, 1995, 2000, 2005,
-  2010, 2015, 2020,
+  2010, 2015,
 ];
 // const years is used for tick values on x-axis. I used this because I was receiving values from dataset like '1,947','2,015'
 let multiples = []; // This is used in the getXAxisScale function
@@ -102,12 +102,12 @@ fetchGDP(url).then((jsonResponse) => {
   // Dates go on the x-axis
   const xScale = scaleLinear()
     .domain([min(dataset, (d) => getYear(d)), max(dataset, (d) => getYear(d))])
-    .range([padding, w - padding - 15]);
+    .range([padding + 15, w - padding - 15]);
 
   // GDPs go on the y-axis
   const yScale = scaleLinear()
-    .domain([min(dataset, (d) => d[1]), max(dataset, (d) => d[1])])
-    .range([h - padding, padding]);
+    .domain([0, max(dataset, (d) => d[1])])
+    .range([h, padding]);
 
   const xAxis = axisBottom(xScale)
     .tickValues(years)
@@ -123,18 +123,19 @@ fetchGDP(url).then((jsonResponse) => {
     .append('svg')
     .attr('width', w)
     .attr('height', h)
-    .style('background', 'beige');
+    .style('background', 'cornsilk')
+    .style('box-shadow', '5px 5px 25px 2px hsl(242,15%,25%)');
 
   // x -axis inside <svg>
   svg
     .append('g')
-    .style('transform', `translate(15px,${h - padding}px)`)
+    .style('transform', `translate(0px,${h - 24}px)`)
     .attr('id', 'x-axis')
     .call(xAxis);
   // y-axis inside <svg>
   svg
     .append('g')
-    .style('transform', `translate(${padding + 15}px,0)`)
+    .style('transform', `translate(${padding + 15}px,-24px)`)
     .attr('id', 'y-axis')
     .call(yAxis);
   // y-axis label as shown in the demo app here (https://bar-chart.freecodecamp.rocks/)
@@ -153,16 +154,21 @@ fetchGDP(url).then((jsonResponse) => {
     .data(dataset)
     .enter()
     .append('rect')
-    .attr('x', (d, i) => xScale(getXAxisScale(d, i)) + 15)
-    .attr('y', (d) => yScale(d[1]) - 7.5)
+    .attr('x', (d, i) => xScale(getXAxisScale(d, i)))
+    .attr('y', (d) => yScale(d[1]))
     .attr('class', 'bar')
     .attr('fill', (d, i) => getSmoothGradient(i))
     .attr('data-date', (d) => d[0])
     .attr('data-gdp', (d) => d[1])
     .attr('width', w / 275)
-    .attr('height', (d) => h - yScale(d[1]) - 22.5)
+    .attr('height', (d) => h - yScale(d[1]))
+    .style('transform', `translate(0,-24px)`)
     .on('mouseover', function (e, d) {
-      tooltip.transition().duration(200).style('opacity', 1);
+      tooltip
+        .attr('data-date', d[0])
+        .transition()
+        .duration(200)
+        .style('opacity', 1);
       tooltip.html(
         `<p>${d[0].substring(0, 4)} ${getQuarters(d[0])}</p><p>$${
           d[1]
